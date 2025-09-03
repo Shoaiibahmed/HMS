@@ -1,0 +1,61 @@
+services:
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "3001:3000"
+    env_file:
+      - ./auth-service/.env
+    depends_on:
+      - patient-service
+
+  patient-service:
+    build: ./patient-service
+    ports:
+      - "3002:3000"
+    env_file:
+      - ./patient-service/.env
+
+  appointment-service:
+    build: ./appointment-service
+    ports:
+      - "3003:3000"
+    env_file:
+      - ./appointment-service/.env
+    depends_on:
+      - patient-service
+      - staff-service
+
+  staff-service:
+    build: ./staff-service
+    ports:
+      - "3004:3000"
+    env_file:
+      - ./staff-service/.env
+
+  ward-service:
+    build: ./ward-service
+    ports:
+      - "3005:3000"
+    env_file:
+      - ./ward-service/.env
+
+  emergency-service:
+    build: ./emergency-service
+    ports:
+      - "3006:3000"
+    env_file:
+      - ./emergency-service/.env
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "80:3000"
+    env_file:
+      - ./api-gateway/.env
+    depends_on:
+      - auth-service
+      - patient-service
+      - appointment-service
+      - emergency-service
+      - staff-service
+      - ward-service

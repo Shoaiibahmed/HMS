@@ -2,20 +2,13 @@ const mongoose = require("mongoose");
 
 const patientSchema = new mongoose.Schema(
   {
-    userId: { type: String, required: true, unique: true }, // from auth-service
-    name: String,
+    userId: { type: String, required: true, unique: true }, // Link to auth-service user
     age: Number,
     gender: String,
     address: String,
-    phone: String,
-    medicalHistory: [
-      {
-        diagnosis: String,
-        treatment: String,
-        prescription: String,
-        visitDate: Date
-      }
-    ]
+    contactNumber: String,
+    bloodType: String,
+    emergencyContact: String
   },
   { timestamps: true }
 );

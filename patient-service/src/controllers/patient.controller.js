@@ -1,26 +1,33 @@
 const Patient = require("../models/patient.model");
 
-// Get current patient's profile
-exports.getProfile = async (req, res) => {
+exports.getPatients = async (req, res) => {
   try {
-    const patient = await Patient.findOne({ userId: req.user.id });
-    if (!patient) return res.status(404).json({ message: "Profile not found" });
-
-    res.json(patient);
+    const patients = await Patient.find();
+    res.json(patients);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// Create or update patient profile
-exports.upsertProfile = async (req, res) => {
+exports.updatePatient = async (req, res) => {
+  const userId = req.params.id;
   try {
     const updated = await Patient.findOneAndUpdate(
-      { userId: req.user.id },
-      { ...req.body, userId: req.user.id },
+      { userId },
+      req.body,
       { new: true, upsert: true }
     );
     res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.deletePatient = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    await Patient.findOneAndDelete({ userId });
+    res.json({ message: "Patient deleted" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
