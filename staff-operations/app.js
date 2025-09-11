@@ -11,6 +11,6 @@ app.use('/api/staff', staffRoutes);
 
 connectDB().then(() => {
   app.listen(process.env.PORT, () =>
-    console.log(`🚀 Staff Operations service running on port ${process.env.PORT}`)
+    console.log(`Staff Operations service running on port ${process.env.PORT}`)
   );
 });
