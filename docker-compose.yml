@@ -1,61 +1,48 @@
 services:
   auth-service:
     build: ./auth-service
+    container_name: auth-service
     ports:
-      - "3001:3000"
+      - '3100:3000'       # HOST:CONTAINER
     env_file:
       - ./auth-service/.env
-    depends_on:
-      - patient-service
 
-  patient-service:
+  patient-portal:
     build: ./patient-service
+    container_name: patient-service
     ports:
-      - "3002:3000"
+      - '3102:3002'
     env_file:
       - ./patient-service/.env
 
-  appointment-service:
-    build: ./appointment-service
+  staff-operations:
+    build: ./staff-operations
+    container_name: staff-operations
     ports:
-      - "3003:3000"
+      - '3103:3003'
     env_file:
-      - ./appointment-service/.env
-    depends_on:
-      - patient-service
-      - staff-service
+      - ./staff-operations/.env
 
-  staff-service:
-    build: ./staff-service
+  appointment-manager:
+    build: ./appointment-manager
+    container_name: appointment-manager
     ports:
-      - "3004:3000"
+      - '3104:3004'
     env_file:
-      - ./staff-service/.env
+      - ./appointment-manager/.env
 
-  ward-service:
-    build: ./ward-service
+  ward-coordinator:
+    build: ./ward-coordinator
+    container_name: ward-coordinator
     ports:
-      - "3005:3000"
+      - '3105:3005'
     env_file:
-      - ./ward-service/.env
+      - ./ward-coordinator/.env
 
-  emergency-service:
-    build: ./emergency-service
+  emergency-response:
+    build: ./emergency-response
+    container_name: emergency-response
     ports:
-      - "3006:3000"
+      - '3106:3006'
     env_file:
-      - ./emergency-service/.env
-
-  api-gateway:
-    build: ./api-gateway
-    ports:
-      - "80:3000"
-    env_file:
-      - ./api-gateway/.env
-    depends_on:
-      - auth-service
-      - patient-service
-      - appointment-service
-      - emergency-service
-      - staff-service
-      - ward-service
+      - ./emergency-response/.env
